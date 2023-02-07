@@ -3,6 +3,8 @@ import { HttpClient } from '@angular/common/http';
 import { PoistnaUdalost } from '../core/models/poistna-udalost.model';
 import { MatDialogConfig, MatDialog } from '@angular/material/dialog';
 import { CourseDialogComponent } from '../course-dialog/course-dialog.component';
+import { Observable } from 'rxjs';
+import { ApiService } from '../core/api/api.service';
 
 @Component({
   selector: 'app-udalost-list',
@@ -13,12 +15,13 @@ export class UdalostListComponent {
 
   poistnaUdalost: PoistnaUdalost[];
 
-  constructor(private http: HttpClient, private readonly dialog: MatDialog) {}
+  constructor(private readonly http: HttpClient, private api: ApiService, private readonly dialog: MatDialog) {}
 
   ngOnInit() {
-    this.http
-      .get('https://fierce-bayou-75726.herokuapp.com/udalosti/')
-      .subscribe((pu: PoistnaUdalost[]) => {
+    // this.http
+    //   .get<Observable<PoistnaUdalost[]>>('https://fierce-bayou-75726.herokuapp.com/udalosti/')
+      this.api.getPoistneUdalosti().subscribe((pu: PoistnaUdalost[]) => { 
+        //TODO: eliminovat subscribe
         this.poistnaUdalost = pu;
       });
   }
@@ -29,11 +32,11 @@ export class UdalostListComponent {
     this.http
       .delete('https://fierce-bayou-75726.herokuapp.com/udalosti/' + id)
       .subscribe(() => {
-        this.http
-          .get('https://fierce-bayou-75726.herokuapp.com/udalosti/')
-          .subscribe((pu: PoistnaUdalost[]) => {
-            this.poistnaUdalost = pu;
-          });
+        // this.http
+        //   .get('https://fierce-bayou-75726.herokuapp.com/udalosti/')
+        //   .subscribe((pu: PoistnaUdalost[]) => {
+        //     this.poistnaUdalost = pu;
+        //   });
       });
   }
 }

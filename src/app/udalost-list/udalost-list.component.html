@@ -1,0 +1,49 @@
+<link
+  rel="stylesheet"
+  href="https://fonts.googleapis.com/icon?family=Material+Icons"
+/>
+<script>
+  $(document).ready(function(){
+  	$('[data-toggle="tooltip"]').tooltip();
+  });
+</script>
+
+<table class="table table-striped table-hover table-bordered">
+  <thead>
+    <tr>
+      <th scope="col">Id</th>
+      <th scope="col">Status</th>
+      <th scope="col">Typ poistenia</th>
+      <th scope="col">Kategoria</th>
+      <th scope="col">Podkategoria</th>
+      <th scope="col">Poskodenie</th>
+      <th scope="col">Specifikacia</th>
+      <th scope="col">Popis</th>
+      <th scope="col">Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let udalost of poistnaUdalost">
+      <th scope="row">{{ udalost.id }}</th>
+      <td>{{ udalost.status }}</td>
+      <td>{{ udalost.typPoistenia }}</td>
+      <td>{{ udalost.kategoria }}</td>
+      <td>{{ udalost.podkategoria }}</td>
+      <td>{{ udalost.poskodenie }}</td>
+      <td>{{ udalost.specifikacia }}</td>
+      <td>{{ udalost.popis | slice: 0:20 }}</td>
+      <td>
+        <a
+          href="{{ 'udalost/' + udalost.id }}"
+          class="edit"
+          title="Edit"
+          data-toggle="tooltip"
+          ><i class="material-icons">&#xE254;</i></a
+        >
+        <button (click)="deleteUdalost(udalost.id)" class="delete">
+          <i class="material-icons">&#xE872;</i>
+        </button>
+      </td>
+    </tr>
+  </tbody>
+</table>
